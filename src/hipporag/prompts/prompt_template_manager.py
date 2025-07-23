@@ -117,6 +117,7 @@ class PromptTemplateManager:
             ValueError: If a required variable is missing.
         """
         template = self.get_template(name)
+        print(f"==start template==\n{template}\n==end template==\n")
         if isinstance(template, Template):
             # Render a single string template
             try:
@@ -133,6 +134,7 @@ class PromptTemplateManager:
                     {"role": item["role"], "content": item["content"].substitute(**kwargs)}
                     for item in template
                 ]
+                print(f"==start rendered_list==\n{rendered_list}\n==end rendered_list==\n")
                 logger.debug(f"Successfully rendered chat history template '{name}' with variables: {kwargs}.")
                 return rendered_list
             except KeyError as e:

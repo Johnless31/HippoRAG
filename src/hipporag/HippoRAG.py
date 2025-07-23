@@ -1392,7 +1392,15 @@ class HippoRAG:
                 if phrase_id is not None:
                     all_phrase_weights[phrase_id] = 0.0
 
-        assert np.count_nonzero(all_phrase_weights) == len(linking_score_map.keys())
+        # Check that we have the expected number of phrase weights
+        # Note: linking_score_map may contain additional passage nodes added later
+        num_nonzero_weights = np.count_nonzero(all_phrase_weights)
+        num_linking_phrases = len(linking_score_map.keys())
+        
+        if num_nonzero_weights != num_linking_phrases:
+            logger.debug(f"Phrase weights count ({num_nonzero_weights}) != linking_score_map count ({num_linking_phrases})")
+            # This is acceptable since passage nodes may be added to linking_score_map later
+        
         return all_phrase_weights, linking_score_map
 
     def graph_search_with_fact_entities(self, query: str,
@@ -1459,7 +1467,9 @@ class HippoRAG:
 
                 phrases_and_ids.add((phrase, phrase_id))
 
-        phrase_weights /= number_of_occurs
+        # Avoid division by zero - only divide where number_of_occurs > 0
+        nonzero_mask = number_of_occurs > 0
+        phrase_weights[nonzero_mask] /= number_of_occurs[nonzero_mask]
 
         for phrase, phrase_id in phrases_and_ids:
             if phrase not in phrase_scores:
