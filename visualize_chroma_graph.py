@@ -682,7 +682,7 @@ class ChromaGraphVisualizer:
 def main():
     """主函数"""
     # 直接使用 test_outputs/deepseek-v3_bge-m3 目录
-    working_dir = "test_outputs/deepseek-v3_bge-m3"
+    working_dir = "./outputs/tenant_1/deepseek-v3_bge-m3"
     
     if not os.path.exists(working_dir):
         print(f"❌ 工作目录不存在: {working_dir}")

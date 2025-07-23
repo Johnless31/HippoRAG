@@ -180,7 +180,6 @@ class HippoRAGByChroma:
         """
         logger.info(f"Indexing Documents with ChromaDB")
         logger.info(f"Performing OpenIE")
-        print(f"===\n{self.global_config.openie_mode}\n===")
         if self.global_config.openie_mode == 'offline':
             self.pre_openie(docs)
         
@@ -189,12 +188,10 @@ class HippoRAGByChroma:
 
         all_openie_info, chunk_keys_to_process = self.load_existing_openie(chunk_to_rows.keys())
         new_openie_rows = {k : chunk_to_rows[k] for k in chunk_keys_to_process}
-        print(f"==start all_openie_info==\n{all_openie_info}\n==end all_openie_info==\n")
 
         if len(chunk_keys_to_process) > 0:
             new_ner_results_dict, new_triple_results_dict = self.openie.batch_openie(new_openie_rows)
             self.merge_openie_results(all_openie_info, new_openie_rows, new_ner_results_dict, new_triple_results_dict)
-        print(f"==start all_openie_info==\n{all_openie_info}\n==end all_openie_info==\n")
 
         if self.global_config.save_openie:
             self.save_openie_results(all_openie_info)
@@ -211,11 +208,9 @@ class HippoRAGByChroma:
         facts = flatten_facts(chunk_triples)
 
         logger.info(f"Encoding Entities")
-        print(f"===\n{entity_nodes}\n===")
         self.entity_embedding_store.insert_strings(entity_nodes)
 
         logger.info(f"Encoding Facts")
-        print(f"===\n{facts}\n===")
         self.fact_embedding_store.insert_strings([str(fact) for fact in facts])
 
         logger.info(f"Constructing Graph")

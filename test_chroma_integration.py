@@ -53,7 +53,7 @@ def test_hipporag_chroma():
     try:
         # 参考demo_ollama_aq.py的配置
         config = BaseConfig()
-        config.save_dir = './outputs'
+        config.save_dir = './outputs/tenant_1'
         config.llm_name = 'deepseek-v3'  # 使用深度求索模型
         config.llm_base_url = 'https://dashscope.aliyuncs.com/compatible-mode/v1'
         config.embedding_model_name = 'bge-m3'  # 使用本地embedding模型
@@ -82,7 +82,8 @@ def test_hipporag_chroma():
         # 测试文档索引
         print("\n📚 测试文档索引...")
         test_docs = [
-            "俊佐是一个人工智能研究员，他住在北京。"
+            "俊佐是一个人工智能研究员，他住在北京。",
+            "俊佐是一家公司的创始人。",
         ]
         
         start_time = time.time()

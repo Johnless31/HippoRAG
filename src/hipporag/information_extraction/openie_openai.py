@@ -98,7 +98,6 @@ class OpenIE:
         metadata = {}
         try:
             # LLM INFERENCE
-            print(f"==start triple_extraction==\n{messages}\n==end triple_extraction==\n")
             raw_response, metadata, cache_hit = self.llm_model.infer(
                 messages=messages,
             )
@@ -121,7 +120,6 @@ class OpenIE:
             )
 
         # Success
-        print(f"==start TripleRawOutput raw_response==\n{raw_response}\n==end TripleRawOutput raw_response==\n")
         return TripleRawOutput(
             chunk_id=chunk_key,
             response=raw_response,
