@@ -18,3 +18,7 @@ boto3
 pyvis
 chromadb
 psutil
+fastapi
+uvicorn
+python-dotenv
+pytest

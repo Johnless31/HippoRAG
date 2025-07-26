@@ -15,10 +15,10 @@ import time
 
 logger = logging.getLogger(__name__)
 
-DEFAULT_LLM = 'deepseek-v3'
-DEFAULT_LLM_BASE_URL = 'https://dashscope.aliyuncs.com/compatible-mode/v1'
-DEFAULT_EMBEDDING_MODEL_NAME = 'bge-m3'
-DEFAULT_EMBEDDING_BASE_URL = 'http://localhost:11434/v1'
+DEFAULT_LLM = os.environ.get('DEFAULT_LLM', 'deepseek-v3')
+DEFAULT_LLM_BASE_URL = os.environ.get('DEFAULT_LLM_BASE_URL', 'https://dashscope.aliyuncs.com/compatible-mode/v1')
+DEFAULT_EMBEDDING_MODEL_NAME = os.environ.get('DEFAULT_EMBEDDING_MODEL_NAME', 'bge-m3')
+DEFAULT_EMBEDDING_BASE_URL = os.environ.get('DEFAULT_EMBEDDING_BASE_URL', 'http://localhost:11434/v1')
 
 
 class MultiTenantHippoRAGManager:

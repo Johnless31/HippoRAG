@@ -198,7 +198,8 @@ class HippoRAGByChroma:
 
         ner_results_dict, triple_results_dict = reformat_openie_results(all_openie_info)
 
-        assert len(chunk_to_rows) == len(ner_results_dict) == len(triple_results_dict)
+        if not (len(chunk_to_rows) == len(ner_results_dict) == len(triple_results_dict)):
+            raise ValueError(f"长度不一致: chunk_to_rows={len(chunk_to_rows)}, ner_results_dict={len(ner_results_dict)}, triple_results_dict={len(triple_results_dict)}")
 
         # prepare data_store
         chunk_ids = list(chunk_to_rows.keys())
