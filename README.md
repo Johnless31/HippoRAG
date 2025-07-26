@@ -38,12 +38,14 @@ categories, bringing it one step closer to true long-term memory.
 
 ----
 
-## Installation
+## Installation & run
 
 ```sh
 conda create -n hipporag python=3.10
 conda activate hipporag
-pip install hipporag
+pip install -r requirements.txt
+export OPENAI_API_KEY=<your openai api key>
+python api_server.py
 ```
 Initialize the environmental variables and activate the environment:
 
