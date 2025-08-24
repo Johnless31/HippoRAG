@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  hipporag:
+    build: .
+    container_name: hipporag-api
+    ports:
+      - "6200:6200"
+    environment:
+      - HIPPORAG_SAVE_DIR=/app/data
+      - PYTHONPATH=/app
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+    restart: unless-stopped
+    networks:
+      - hipporag-network
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: hipporag-ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    restart: unless-stopped
+    networks:
+      - hipporag-network
+
+  chromadb:
+    image: chromadb/chroma:latest
+    container_name: hipporag-chromadb
+    ports:
+      - "8000:8000"
+    environment:
+      - CHROMA_SERVER_HOST=0.0.0.0
+      - CHROMA_SERVER_HTTP_PORT=8000
+      - CHROMA_SERVER_CORS_ALLOW_ORIGINS=["*"]
+    volumes:
+      - chromadb_data:/chroma/chroma
+    restart: unless-stopped
+    networks:
+      - hipporag-network
+
+networks:
+  hipporag-network:
+    driver: bridge
+
+volumes:
+  ollama_data:
+    driver: local
+  chromadb_data:
+    driver: local
