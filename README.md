@@ -41,12 +41,48 @@ categories, bringing it one step closer to true long-term memory.
 ## Installation & run
 
 ```sh
+#建议使用uv来进行包管理，先安装uv（若已安装可忽略）
+curl -LsSf https://astral.sh/uv/install.sh | sh
 conda create -n hipporag python=3.10
 conda activate hipporag
-pip install -r requirements.txt
+# requirements.txt是从requirements.in编译而来
+# 编译命令uv pip compile requirements.in -o requirements.txt
+uv pip sync requirements.txt
 export OPENAI_API_KEY=<your openai api key>
 python api_server.py
 ```
+## REMEMBER To Compile again if you want to ADD New Python Package
+要将新加入的包添加到已有的 `requirements.txt` 中，并确保所有依赖项都正确，你应该更新你的源文件 `requirements.in`，然后重新运行 `uv pip compile` 命令。
+
+下面是具体步骤：
+
+1.  **编辑 `requirements.in` 文件**：
+    用文本编辑器打开 `requirements.in` 文件，并在其中加入你的新包，比如 `new_package`。
+
+    例如，如果你的 `requirements.in` 原来是这样：
+
+    ```
+    requests
+    flask
+    ```
+
+    现在你想添加 `numpy`，就把它加到文件里：
+
+    ```
+    requests
+    flask
+    numpy
+    ```
+
+2.  **重新编译 `requirements.txt`**：
+    在命令行中再次运行你提供的命令。`uv` 会读取更新后的 `requirements.in` 文件，解析所有包（包括新加入的），并生成一个新的、完整的 `requirements.txt` 文件。
+
+    ```bash
+    uv pip compile requirements.in -o requirements.txt
+    ```
+
+`uv` 的这个设计理念是，`requirements.in` 文件是你手动维护的“源头”，只列出你直接需要的包。而 `requirements.txt` 是通过编译自动生成的，它包含了所有直接和间接的依赖项及其精确版本，确保环境的可复现性。所以，每当你需要改变依赖时，都应该修改 `requirements.in`，然后重新编译生成 `requirements.txt`。
+
 Initialize the environmental variables and activate the environment:
 
 ```sh
